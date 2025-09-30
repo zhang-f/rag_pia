@@ -28,6 +28,36 @@ import torch.nn as nn
 import torch.nn.init as init
 import math
 
+
+
+# class FusionModel(nn.Module):
+#     def __init__(self, vocab_size, d_model=4096, nhead=4, num_encoder_layers=4, dim_ff=2048, dropout=0.1):
+#         super().__init__()
+#         self.d_model = d_model
+#         self.embedding = nn.Embedding(vocab_size, d_model)
+#         self.pos_enc = PositionalEncoding(d_model, dropout)
+
+#         # Encoder only
+#         encoder_layer = nn.TransformerEncoderLayer(d_model, nhead, dim_ff, dropout, batch_first=True)
+#         self.encoder = nn.TransformerEncoder(encoder_layer, num_layers=num_encoder_layers)
+
+#     def forward(self, src_ids, noise_std=0.01):
+
+#         # 1. Encoder embedding
+#         src = self.embedding(src_ids) * math.sqrt(self.d_model)
+#         src = self.pos_enc(src)
+#         z = self.encoder(src)  # [B, T, d_model]
+
+#         # # 2. Mask RAG latent positions
+#         # if mask_rag is not None:
+#         #     z[:, mask_rag] = 0
+
+#         # 3. Add noise for privacy / obfuscation
+#         z_tilde = z + torch.randn_like(z) * noise_std
+
+#         return z, z_tilde
+
+
 class FusionModel(nn.Module):
     def __init__(self, d_model=4096, r=8, alpha=16, scale=1.0):
         super().__init__()
